@@ -8,56 +8,43 @@ namespace Integration.Test
     public class RiemannSum_1d
     {
         [TestMethod]
-        public void TestDifferentials()
+        public void Differentials_FirstEntry_IsCorrect()
         {
-            double[] bounds = { 0, 4 };
-            int numPartitions = 100;
-            Func<double, double> function = Functions.quadratic;
-            RiemannSum_1D myRiemannSum = new RiemannSum_1D(bounds, numPartitions, function);
-
-            Assert.AreEqual(myRiemannSum.differentials[0], 4 / 100);
+            var viewModel = new IntegrationViewModel();
+            Assert.AreEqual(viewModel.myRiemannSum.differentials[0], 4f / 100, 0.001);
         }
 
         [TestMethod]
-        public void TestIntervals()
+        public void Intervals_Entries_AreCorrect()
         {
-            double[] bounds = { 0, 4 };
-            int numPartitions = 100;
-            Func<double, double> function = Functions.quadratic;
-            RiemannSum_1D myRiemannSum = new RiemannSum_1D(bounds, numPartitions, function);
+            var viewModel = new IntegrationViewModel();
 
-            Assert.AreEqual(myRiemannSum.intervals[0], 0);
-            Assert.AreEqual(myRiemannSum.intervals[1], 4);
+            Assert.AreEqual(viewModel.myRiemannSum.intervals[0], 0);
+            Assert.AreEqual(viewModel.myRiemannSum.intervals[1], 4);
         }
 
         [TestMethod]
-        public void TestPartitions()
+        public void Partitions_FirstAndLastEnries_AreCorrect()
         {
-            double[] bounds = { 0, 4 };
-            int numPartitions = 100;
-            Func<double, double> function = Functions.quadratic;
-            RiemannSum_1D myRiemannSum = new RiemannSum_1D(bounds, numPartitions, function);
+            var viewModel = new IntegrationViewModel();
 
-            Assert.AreEqual(myRiemannSum.partitionArray[0, 0], 0 + 4 / 100);
-            Assert.AreEqual(myRiemannSum.partitionArray[1, 0], 0);
-            Assert.AreEqual(myRiemannSum.partitionArray[2, 0], 0 + (4/100 * 0.5));
-
-            Assert.AreEqual(myRiemannSum.partitionArray[0, myRiemannSum.partitionArray.Length], 4);
-            Assert.AreEqual(myRiemannSum.partitionArray[1, myRiemannSum.partitionArray.Length], 4 - 4 / 100);
-            Assert.AreEqual(myRiemannSum.partitionArray[2, myRiemannSum.partitionArray.Length], 4 - (4 / 100 * 0.5));
+            Assert.AreEqual(viewModel.myRiemannSum.partitionArray[0, 0], 0 + 4f / 100, 0.01);
+            Assert.AreEqual(viewModel.myRiemannSum.partitionArray[1, 0], 0, 0.01);
+            Assert.AreEqual(viewModel.myRiemannSum.partitionArray[2, 0], 0 + (4f / 100 * 0.5), 0.01);
+                            
+            Assert.AreEqual(viewModel.myRiemannSum.partitionArray[0, viewModel.myRiemannSum.partitionArray.GetLength(1) - 1], 4, 0.01);
+            Assert.AreEqual(viewModel.myRiemannSum.partitionArray[1, viewModel.myRiemannSum.partitionArray.GetLength(1) - 1], 4 - (4f / 100), 0.01);
+            Assert.AreEqual(viewModel.myRiemannSum.partitionArray[2, viewModel.myRiemannSum.partitionArray.GetLength(1) - 1], 4 - (4f / 100 * 0.5), 0.01);
         }
 
         [TestMethod]
-        public void TestResult()
+        public void Result_Value_IsWithinDesiredRange()
         {
-            double[] bounds = { 0, 4 };
-            int numPartitions = 100;
-            Func<double, double> function = Functions.quadratic;
-            RiemannSum_1D myRiemannSum = new RiemannSum_1D(bounds, numPartitions, function);
+            var viewModel = new IntegrationViewModel();
 
-            Assert.AreEqual(myRiemannSum.result[0], 64/3, 1);
-            Assert.AreEqual(myRiemannSum.result[1], 64 / 3, 1);
-            Assert.AreEqual(myRiemannSum.result[2], 64 / 3, 1);
+            Assert.AreEqual(viewModel.myRiemannSum.result[0], 64 / 3f, 0.5);
+            Assert.AreEqual(viewModel.myRiemannSum.result[1], 64 / 3f, 0.5);
+            Assert.AreEqual(viewModel.myRiemannSum.result[2], 64 / 3f, 0.5);
         }
     }
 }
