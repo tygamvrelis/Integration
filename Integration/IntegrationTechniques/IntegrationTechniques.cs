@@ -21,6 +21,7 @@ namespace Integration
         #region Fields
         public double[] result { get; set; }
         public double[,] partitionArray { get; set; }
+        public double timeElapsed { get; set; }
         #endregion
     }
 }
